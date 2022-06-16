@@ -2,10 +2,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: peachpuff;
-  height: 275px;
+
+  background: linear-gradient(135deg, peachpuff 0%, rgb(251, 188, 134) 50%);
+  height: 300px;
   width: 275px;
-  border-radius: 70% 70% 30% 30%;
+  border-radius: 70% 70% 50% 50% / 80% 80% 70% 70%;
 }
 
 .inner-device-border {
@@ -13,38 +14,80 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: pink;
-  height: 225px;
+  background: linear-gradient(135deg, pink 0%, rgb(251, 150, 167) 40%);
+  height: 250px;
   width: 225px;
-  border-radius: 70% 70% 30% 30%;
+  border-radius: 70% 70% 50% 50% / 80% 80% 70% 70%;
+
+  font-family: 'Rock Salt';
+  text-align: center;
 }
 
 .screen {
   border-color: grey;
-  background-color: rgb(169, 169, 169);
+  background-color: rgba(169, 169, 169, 0.55);
   border-style: solid;
   border-width: 2px;
-  height: 200px;
+  height: 150px;
   width: 175px;
-  border-radius: 70% 70% 30% 30%;
+  border-radius: 10%;
+
+  margin-top: 0px;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
 }
 
 .cupcake{
   float: right;
   position: absolute;
-  top: 145px;
+  top: 170px;
   left: 170px;
   z-index: 2;
 }
 
 .pet{
   position: absolute;
-  top: 120px;
+  top: 145px;
+}
+
+button {
+  position:absolute;
+  font-family: 'Roboto';
+
+  border-radius: 45%;
+  padding-top: 4px;
+  padding-bottom: 2px;
+  background-color: rgb(253, 230, 242);
+  border-style: solid;
+  border-color: grey;
+  border-width: 1px;
+
+  box-shadow: 1px 1px 1px rgba(253, 230, 242, 0.1);
+  margin-top: 4px;
+
+  font-size: 11px;
+}
+
+.feedBtn {
+  top: 250px;
+  left: 80px;
+}
+
+.playBtn {
+  top: 250px;
+  left: 150px;
+}
+
+.moneyLeft,
+.feedCount {
+  font-family: 'Roboto Mono';
+}
+
+.coin{
+  position: absolute;
+  height: 25px;
 }
 
 
