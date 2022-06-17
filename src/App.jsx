@@ -13,14 +13,10 @@ class App extends React.Component {
       money: 50, 
       cakeSlice: false, 
       petLeft: 105,
-      coin: {
-        coinCounter: 0,
-        coinInterval: 'hold',
-        locationInterval: 'hold',
-        coinObject: {},
-        coinObjectY: {},
-        coinObjectX: {}
-      }
+      coinObject: [],
+      coinObjectY: {},
+      coinObjectX: {},
+      coinCounter: 0
     }
     this.handleFeedClick = this.handleFeedClick.bind(this);
     this.handleGameClick = this.handleGameClick.bind(this);
@@ -65,30 +61,29 @@ class App extends React.Component {
   // Method for random coin generation within handleGameClick
   randomCoinGenerate(){
     const coinX = Math.round(Math.random() * 2);
-    const coinId = 'coin_' + this.state.coin.coinCounter;
-  
-    const copyCoinObj = {...this.state.coin};//JSON.parse(JSON.stringify(this.state.coin));
-    console.log(JSON.parse(JSON.stringify(this.state.coin)));
-    copyCoinObj.coinObjectY[coinId] = 100;
-    copyCoinObj.coinObjectX[coinId] = 70 + (coinX * 65);
+    const coinId = 'coin_' + this.state.coinCounter;
 
-    copyCoinObj.coinCounter = this.state.coin.coinCounter + 1;
+    const copyCoinObjectY = {...this.state.coinObjectY};
+    copyCoinObjectY[coinId] = 100;
 
-    this.setState({coin: copyCoinObj}, async () => {
-      const innerCopy = {...this.state.coin};//JSON.parse(JSON.stringify(this.state.coin));
-      const coinElement = <Coin key={coinId} idHTML={coinId} xLoc={this.state.coin.coinObjectX[coinId]} yLoc={this.state.coin.coinObjectY[coinId]}/>
-      innerCopy.coinObject[coinId] = coinElement;
-      this.setState({coin: innerCopy}, this.updateCoinLocation)
-    });
+    const copyCoinObjectX = {...this.state.coinObjectX};
+    copyCoinObjectX[coinId] = 70 + (coinX * 65);
+
+    this.setState({coinObjectY: copyCoinObjectY, coinObjectX: copyCoinObjectX, coinCounter: this.state.coinCounter},
+      () => {
+        const copyCoinObject = [...this.state.coinObject];
+        copyCoinObject.push(<Coin key={coinId} idHTML={coinId} xLoc={this.state.coinObjectX[coinId]} yLoc={this.state.coinObjectY[coinId]}/>)
+        this.setState({coinObject: copyCoinObject});
+      });
   }
 
   updateCoinLocation() {
-    Object.keys(this.state.coin.coinObject).forEach(el => {
+    Object.keys(this.state.coinObject).forEach(el => {
       console.log('entered')
-      const coinCopy = {...this.state.coin};//JSON.parse(JSON.stringify(this.state.coin));
-      coinCopy.coinObjectY[el] = coinCopy.coinObjectY[el] + 25;
-      console.log(coinCopy.coinObject[el])
-      this.setState({coin: coinCopy}, () => console.log(this.state.coin));
+      const copyCoinObjectY2 = {...this.state.coinObjectY};
+      copyCoinObjectY2[el] = copyCoinObjectY2[el] + 25;
+      console.log(copyCoinObjectY2.coinObject[el])
+      this.setState({coinObjectY: copyCoinObjectY2}, () => console.log(this.state));
     }
     )
   }
@@ -109,7 +104,7 @@ class App extends React.Component {
         <div className="inner-device-border">
           Codesmith
           <div className ="screen">
-            {Object.values(this.state.coin.coinObject)}
+            {this.state.coinObject}
            <div className="feedCount">You Feed Me: {this.state.feedCount} times</div>
            <div className="moneyLeft">Money Left: $ {this.state.money} </div>
             <Cake renderCake={this.state.cakeSlice}/>
